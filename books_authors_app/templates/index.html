@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Book and Authors</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
+      integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2"
+      crossorigin="anonymous"
+    />
+
+    <style>
+      body * {
+        font-family: sans-serif;
+      }
+      div.left {
+        border: 1px solid black;
+        width: 40%;
+        min-height: 200px;
+        display: inline-block;
+        vertical-align: top;
+        padding: 10px;
+        border-radius: 10px;
+      }
+      div.right {
+        border: 1px solid black;
+        width: 58%;
+        min-height: 200px;
+        display: inline-block;
+        vertical-align: top;
+      }
+      h1,
+      h3 {
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="container">
+        <h1>Books and <a href="/authors_index">Authors</a></h1>
+        <!-- {{all_books}} -->
+        <hr />
+
+        <!-- ADD A BOOK -->
+        <div class="left">
+          <h3>Add a Book 📔</h3>
+          <form action="/add_book" method="post">
+            {% csrf_token %}
+            <div class="form-group">
+              <input
+                name="title"
+                type="text"
+                class="form-control"
+                placeholder="Title"
+                spellcheck="false"
+                data-ms-editor="true"
+              />
+            </div>
+            <div class="form-group">
+              <textarea
+                name="desc"
+                class="form-control"
+                placeholder="Description"
+              ></textarea>
+            </div>
+            <input class="btn btn-primary" type="submit" value="Add 📚" />
+          </form>
+        </div>
+
+        <!-- DISPLAY BOOKS -->
+        <div class="right">
+          <table class="table">
+            <thead class="thead-dark">
+              <tr>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for book in all_books %}
+              <tr>
+                <th scope="row">{{book.id}}</th>
+                <td>{{book.title}}</td>
+                <td><a href="/books/{{book.id}}">view</a></td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
